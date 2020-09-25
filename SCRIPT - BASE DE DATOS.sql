@@ -1,0 +1,52 @@
+CREATE DATABASE librería
+
+
+CREATE TABLE TblEditorial(
+EdiId INT AUTO_INCREMENT PRIMARY KEY,
+EdiNombre VARCHAR(50) NOT NULL,
+EdiEstadoRegistro TINYINT(1) NOT NULL,
+EdiFhr DATETIME NOT NULL,
+EdiFhm DATETIME
+);
+
+
+
+CREATE TABLE TblAutor(
+AutId INT AUTO_INCREMENT PRIMARY KEY,
+AutNombres VARCHAR(30) NOT NULL,
+AutApellidos VARCHAR(30),
+AutEstadoRegistro TINYINT(1) NOT NULL,
+AutFhr DATETIME NOT NULL,
+AutFhm DATETIME
+);
+
+
+
+CREATE TABLE TblLibroVenta(
+LivId INT AUTO_INCREMENT PRIMARY KEY,
+LivIsbn VARCHAR(15) NOT NULL,
+LivTitulo VARCHAR(100) NOT NULL,
+LivAnioPublicacion CHAR(5) NOT NULL,
+LivEdiId INT NOT NULL,
+LivPrecio DECIMAL(19,4) NOT NULL,
+LivEstadoRegistro TINYINT(1) NOT NULL,
+LivFhr DATETIME NOT NULL,
+LivFhm DATETIME,
+CONSTRAINT fk_libro_editorial FOREIGN KEY (LivEdiId) REFERENCES TblEditorial (EdiId)
+);
+
+
+
+
+
+
+CREATE TABLE TblAutorLibroVenta (
+AulId INT AUTO_INCREMENT PRIMARY KEY,
+AulAutId INT NOT NULL,
+AulLivId INT NOT NULL,
+AulEstadoRegistro TINYINT(1) NOT NULL,
+AulFhr DATETIME NOT NULL,
+AulFhm DATETIME,
+CONSTRAINT fk_autor_libro_venta_autor FOREIGN KEY (AulAutId) REFERENCES TblAutor (AutId),
+CONSTRAINT fk_autor_libro_venta_libro_venta FOREIGN KEY (AulLivId) REFERENCES TblLibroVenta (LivId)
+);
